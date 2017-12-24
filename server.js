@@ -18,7 +18,7 @@ var db;
 
 MongoClient.connect(cfg.mongo.uri, (err, client) => {
     if (err) return console.log(err)
-    db = client.db('scl');
+    db = client.db(cfg.mongo.db);
     require('./app/routes')(app, db);
     app.listen(port, () => {
         console.log('We are live on ' + port);
