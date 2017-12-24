@@ -11,6 +11,7 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
+app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -26,7 +27,5 @@ MongoClient.connect(cfg.mongo.uri, (err, client) => {
 })
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html')
-// Note: __dirname is directory that contains the JavaScript source code. Try logging it and see what you get!
-// Mine was '/Users/zellwk/Projects/demo-repos/crud-express-mongo' for this app.
-});
+    res.render('index.ejs')
+})
