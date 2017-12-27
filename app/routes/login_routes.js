@@ -1,7 +1,8 @@
 /**
  * Created by murtaza on 25/12/2017.
  */
-module.exports = function(app, db, passport) {
+var Player = require('../models/player');
+module.exports = function(app, passport) {
 
     // =====================================
     // HOME PAGE (with login links) ========
@@ -68,6 +69,32 @@ module.exports = function(app, db, passport) {
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+
+    app.get('/players', isLoggedIn, function(req, res) {
+        /*db.collection('player').find().toArray((err, result) => {
+         if (err) return console.log(err)
+         // renders players.ejs
+         res.render('players.ejs', {player: result})
+         })*/
+        if (req.user.admin) {
+            Player.find().lean().exec(function (err, result) {
+                console.log(result);
+                res.render('players.ejs', {player: result, user: req.user})
+            });
+        } else {
+            res.redirect("/profile")
+        }
+    });
+
+    app.post('/player', function(req, res) {
+        // db.collection('player').insertOne(req.body, (err, result) => {
+        Player.create(req.body, function (err, player) {
+        if (err) return console.log(err)
+
+        console.log('saved to database')
+        res.redirect('/players')
+    })
+});
 };
 
 // route middleware to make sure a user is logged in

@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SCL 2018</title>
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/> <!-- load bootstrap css -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"/> <!-- load fontawesome -->
-  <style>
-    body        { padding-top:80px; }
-  </style>
+  <% include partials/head %>
 </head>
 <body>
-<h1>Players List</h1>
+  <header>
+    <% include ./partials/header %>
+  </header>
+  <h1>Players List</h1>
 
-<table class="player">
-  <colgroup span="4"></colgroup>
-  <tr>
-    <th>Name</th>
-    <th>Bat</th>
-    <th>Bowl</th>
-    <th>WK</th>
-    <th>Lead a Team?</th>
-  </tr>
-  <% for(var i=0; i<player.length; i++) {%>
-  <tr class="player">
-    <td><span><%= player[i].name %></span></td>
-    <td><span><%= player[i].bat %></span></td>
-    <td><span><%= player[i].bowl %></span></td>
-    <td><span><%= player[i].wk %></span></td>
-    <td><span><%= player[i].lead %></span></td>
-  </tr>
-  <% } %>
-</table>
+  <table class="player">
+    <colgroup span="4"></colgroup>
+    <tr>
+      <th>Name</th>
+      <th>Bat</th>
+      <th>Bowl</th>
+      <th>WK</th>
+      <th>Lead a Team?</th>
+    </tr>
+    <% for(var i=0; i<player.length; i++) {%>
+    <tr class="player">
+      <td><span><%= player[i].name %></span></td>
+      <td><span><%= player[i].bat %></span></td>
+      <td><span><%= player[i].bowl %></span></td>
+      <td><span><%= player[i].wk %></span></td>
+      <td><span><%= player[i].lead %></span></td>
+    </tr>
+    <% } %>
+  </table>
 
 <form action="/player" method="POST">
   <input type="text" placeholder="Name" name="name">

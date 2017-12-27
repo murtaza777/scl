@@ -16,6 +16,7 @@ const morgan       = require('morgan');
 const cfg = require('./config');
 
 // configuration ===============================================================
+mongoose.Promise = global.Promise;
 mongoose.connect(cfg.mongo.uri, { useMongoClient: true }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
@@ -43,12 +44,12 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-var db;
+//var db;
 
 MongoClient.connect(cfg.mongo.uri, (err, client) => {
     if (err) return console.log(err)
-    db = client.db(cfg.mongo.db);
-    require('./app/routes')(app, db, passport);
+    //db = client.db(cfg.mongo.db);
+    require('./app/routes')(app, passport);
     app.listen(port, () => {
         console.log('We are live on ' + port);
     });
