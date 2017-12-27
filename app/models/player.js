@@ -12,7 +12,7 @@ var playerSchema = mongoose.Schema({
     bowl     : { type: Number, min: 1, max: 10, default: 0 },
     wk       : { type: Number, min: 1, max: 10, default: 0 },
     lead     : Boolean,
-    round    : { type: Number, min: 1, max: 2, default: 0 },
+    round    : { type: Number, min: 0, max: 2, default: 0 },
     bids     : [
         {
             team: String,
