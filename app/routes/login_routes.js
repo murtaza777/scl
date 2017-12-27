@@ -1,7 +1,7 @@
 /**
  * Created by murtaza on 25/12/2017.
  */
-module.exports = function(app, db, passport) {
+module.exports = function(app, passport) {
 
     // =====================================
     // HOME PAGE (with login links) ========
