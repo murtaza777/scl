@@ -11,8 +11,20 @@ var playerSchema = mongoose.Schema({
     bat      : { type: Number, min: 1, max: 10, default: 0 },
     bowl     : { type: Number, min: 1, max: 10, default: 0 },
     wk       : { type: Number, min: 1, max: 10, default: 0 },
-    lead     : Boolean,
-    round    : { type: Number, min: 0, max: 2, default: 0 },
+    lead     : String,
+    round    : { type: Number, min: 1, max: 2, default: 2 },
+    round1   : [
+        {
+            team : String,
+            amount : { type: Number, default: 0 }
+        }
+    ],
+    round2   : [
+        {
+            team : String,
+            amount : { type: Number, default: 0 }
+        }
+    ],
     bids     : [
         {
             team: String,

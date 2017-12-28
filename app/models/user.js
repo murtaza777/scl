@@ -13,7 +13,9 @@ var userSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Player'
         }
-    ]
+    ],
+    name         : String,
+    balance      : { type: Number, max: 1500000 }
 
 });
 
