@@ -9,7 +9,7 @@ const session      = require('express-session');
 const morgan       = require('morgan');
 
 // const url = require('url');
-// const path = require('path');
+const path = require('path');
 
 //const mongo = require('./config/mongo');
 
@@ -26,6 +26,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.set('view engine', 'ejs');
+app.use('/public', express.static(path.join(__dirname, '/public')));
 
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
