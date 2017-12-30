@@ -14,9 +14,10 @@ var userSchema = mongoose.Schema({
             ref: 'Player'
         }
     ],
-    name         : String,
+    name         : { type: String, default: "Owner" },
     balance      : { type: Number, default: 1500000 },
-    round1      : { type: Number, default: 1000000 }
+    round1      : { type: Number, default: 1000000 },
+    round2      : { type: Number, default: 500000 }
 
     },
     {
