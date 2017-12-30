@@ -2,6 +2,7 @@
  * Created by murtaza on 25/12/2017.
  */
 var Player = require('../models/player');
+var User = require('../models/user');
 module.exports = function(app, passport) {
 
     // =====================================
@@ -43,9 +44,20 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs', {
-            user : req.user // get the user out of session and pass to template
+        Player.find({}).then(players => {
+            User.find({}).limit(4).then(users => {
+                res.render('profile', {
+                    players: players,
+                    users: users,
+                    user: req.user
+                });
+            });
+        }).catch(err => {
+            res.sendStatus(404);
         });
+        /*res.render('profile.ejs', {
+            user : req.user // get the user out of session and pass to template
+        });*/
     });
 
     // =====================================
@@ -71,11 +83,6 @@ module.exports = function(app, passport) {
     }));
 
     app.get('/players', isLoggedIn, function(req, res) {
-        /*db.collection('player').find().toArray((err, result) => {
-         if (err) return console.log(err)
-         // renders players.ejs
-         res.render('players.ejs', {player: result})
-         })*/
         if (req.user.admin) {
             Player.find().lean().exec(function (err, result) {
                 console.log(result);
@@ -89,12 +96,88 @@ module.exports = function(app, passport) {
     app.post('/player', function(req, res) {
         // db.collection('player').insertOne(req.body, (err, result) => {
         Player.create(req.body, function (err, player) {
-        if (err) return console.log(err)
+            if (err) return console.log(err);
 
-        console.log('saved to database')
-        res.redirect('/players')
-    })
-});
+            console.log('saved to database');
+            res.redirect('/players')
+        });
+    });
+
+    app.get('/assign', isLoggedIn, function(req, res) {
+        Player.find({}).then(players => {
+            User.find({}).limit(4).then(users => {
+                res.render('assign', {
+                    players: players,
+                    users: users,
+                    user: req.user
+                });
+            });
+
+        }).catch(err => {
+            res.sendStatus(404);
+        });
+    });
+
+    /*app.post('/assign', isLoggedIn, (req, res) => {
+        let q = req.body.q;
+        console.log(req.body.q)
+        let query = {
+           "name": {"$regex": q, "$options": "i"}
+        };
+
+        User.find({}).limit(4).then( users => {
+            Player.find(query).limit(6).then(players => {
+                // console.log(players)
+                // console.log(users)
+                res.render('assign', {
+                    players: players,
+                    users: users,
+                    user: req.user
+                });
+            });
+
+        }).catch(err => {
+                res.sendStatus(404);
+        });
+    });*/
+
+    app.post('/assign', isLoggedIn, (req, res) => {
+        console.log(req.body);
+        User.findOne({'username': req.body.teams}, function (err, user) {
+            console.log("user");
+            console.log(user);
+            if(err){
+                res.json(err);
+                console.log(user);
+            }
+            if(user){
+                //If group is found loop trough the users
+                Player.findOne({'name': req.body.name}, function (err, player) {
+                    console.log("player");
+                    console.log(player);
+                    user.team.push(player._id);
+                    user.save(function (err) {
+                        if (err) {
+                            throw err;
+                        }
+                    });
+                    player.available = false;
+                    console.log(req.body.bid);
+                    player.price = req.body.bid;
+                    player.round = req.body.round;
+                    player.save(function (err) {
+                        if (err) {
+                            throw err;
+                        }
+                    });
+                    res.redirect('/profile')
+                });
+
+            } else{
+                //Do what you need to do if group hasn't been found
+            }
+        })
+    });
 };
 
 // route middleware to make sure a user is logged in
