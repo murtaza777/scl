@@ -31,19 +31,22 @@
     <% } %>
   </table>
 
-<form action="/player" method="POST">
-  <input type="text" placeholder="Name" name="name">
-  <input type="number" placeholder="Bat" name="bat">
-  <input type="number" placeholder="Bowl" name="bowl">
-  <input type="number" placeholder="WK" name="wk">
-  <span>Lead?</span>
-  <select name="lead">
-    <option value="Yes">Yes</option>
-    <option value="No" selected>No</option>
-    <option value="Maybe">Maybe</option>
-  </select>
-  <button type="submit">Submit</button>
-</form>
+  <% if (user && user.admin) { %>
+    <form action="/player" method="POST">
+      <input type="text" placeholder="Name" name="name">
+      <input type="number" placeholder="Bat" name="bat">
+      <input type="number" placeholder="Bowl" name="bowl">
+      <input type="number" placeholder="WK" name="wk">
+      <span>Lead?</span>
+      <select name="lead">
+        <option value="Yes">Yes</option>
+        <option value="No" selected>No</option>
+        <option value="Maybe">Maybe</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+  <% } %>
+
   <footer>
     <% include ./partials/footer %>
   </footer>

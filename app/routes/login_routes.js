@@ -45,7 +45,7 @@ module.exports = function(app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
         Player.find({}).then(players => {
-            User.find({}).limit(4).then(users => {
+            User.find({}).limit(5).then(users => {
                 res.render('profile', {
                     players: players,
                     users: users,
@@ -105,7 +105,7 @@ module.exports = function(app, passport) {
 
     app.get('/assign', isLoggedIn, function(req, res) {
         Player.find({}).then(players => {
-            User.find({}).limit(4).then(users => {
+            User.find({}).limit(5).then(users => {
                 res.render('assign', {
                     players: players,
                     users: users,
@@ -156,6 +156,8 @@ module.exports = function(app, passport) {
                     console.log("player");
                     console.log(player);
                     user.team.push(player._id);
+                    user.balance = user.balance - req.body.bid
+                    user.round1 = user.round1 - req.body.bid
                     user.save(function (err) {
                         if (err) {
                             throw err;

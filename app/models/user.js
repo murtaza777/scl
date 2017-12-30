@@ -6,7 +6,7 @@ var userSchema = mongoose.Schema({
 
     username     : String,
     password     : String,
-    admin        : Boolean,
+    admin        : { type: Boolean, default: false },
     owner        : Boolean,
     team         : [
         {
@@ -15,7 +15,8 @@ var userSchema = mongoose.Schema({
         }
     ],
     name         : String,
-    balance      : { type: Number, max: 1500000 }
+    balance      : { type: Number, default: 1500000 },
+    round1      : { type: Number, default: 1000000 }
 
     },
     {
