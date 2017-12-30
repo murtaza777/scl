@@ -17,7 +17,10 @@ var userSchema = mongoose.Schema({
     name         : String,
     balance      : { type: Number, max: 1500000 }
 
-});
+    },
+    {
+        timestamps: true
+    });
 
 // methods ======================
 // generating a hash
