@@ -7,7 +7,7 @@
   <header>
     <% include ./partials/header %>
   </header>
-  <h1>Players List</h1>
+  <h1>Available Players List</h1>
 
   <table class="player">
     <colgroup span="4"></colgroup>
@@ -19,13 +19,15 @@
       <th>Lead a Team?</th>
     </tr>
     <% for(var i=0; i<player.length; i++) {%>
-    <tr class="player">
-      <td><span><%= player[i].name %></span></td>
-      <td><span><%= player[i].bat %></span></td>
-      <td><span><%= player[i].bowl %></span></td>
-      <td><span><%= player[i].wk %></span></td>
-      <td><span><%= player[i].lead %></span></td>
-    </tr>
+      <% if (player[i].available) { %>
+        <tr class="player">
+          <td><span><%= player[i].name %></span></td>
+          <td><span><%= player[i].bat %></span></td>
+          <td><span><%= player[i].bowl %></span></td>
+          <td><span><%= player[i].wk %></span></td>
+          <td><span><%= player[i].lead %></span></td>
+        </tr>
+      <% } %>
     <% } %>
   </table>
 

@@ -1,0 +1,20 @@
+<% for(var i=0; i<users.length; i++) { %>
+  <% if (!users[i].admin) { %>
+    <div class=”col">
+      <h3><%= users[i].username %></h3>
+      <ol>
+      <% users[i].team.forEach(function (playerId) { %>
+        <% players.forEach(function (player) { %>
+          <% if (player.id == playerId) { %>
+            <li><%= player.name %></li>
+          <% } %>
+        <% }) %>
+      <% }) %>
+      </ol>
+    </div>
+  <% } %>
+<% } %>
+
+
+
+

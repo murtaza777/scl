@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include partials/head %>
+</head>
+<body>
+  <header>
+    <% include ./partials/header %>
+  </header>
+  <h1>Assign Players</h1>
+
+  <!--<form id="search" action="" method="post" class="form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="q" name="q" placeholder="Search...">
+    </div>
+    <button type="submit" class="btn btn-primary">Search Players</button>
+  </form>-->
+
+  <% if (players) { %>
+
+
+              <form action="/assign" method="POST" class="form-inline">
+                <!--<li>-->
+                  <div class="form-group">
+                    <input type="text" list="players" name="name" placeholder="Player name" />
+                    <input type="text" list="teams" name="teams" placeholder="Team name" />
+                    <input type="number" placeholder="Bid Price" name="bid"/>
+                    <input type="number" placeholder="Round" name="round"/>
+                    <button type="submit" class="btn btn-primary">Add To Team</button>
+                  </div>
+                <!--</li>-->
+              </form>
+
+        <datalist id="teams">
+          <% for(var i=0; i<users.length; i++) {%>
+          <% if (!users[i].admin) { %>
+          <option><%= users[i].username %></option>
+          <% } %>
+          <% } %>
+        </datalist>
+
+        <datalist id="players">
+          <% for(var i=0; i<players.length; i++) { %>
+            <% if (players[i].available) { %>
+              <option><%= players[i].name %></option>
+            <% } %>
+          <% } %>
+        </datalist>
+  <% } %>
+
+  <footer>
+    <% include ./partials/footer %>
+  </footer>
+</body>
+</html>
+
+
+
